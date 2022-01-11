@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/master.css">
+    <title>Tic Tac Toe</title>
+</head>
+<body>
+
+    <div id="game-view"> 
+        <div id="game-view-info">
+            {{ infoMessage}}
+            <button @click="restart()"> Restart </button>
+
+        </div>
+        <div id="game-view-squares">
+            
+           
+            <div
+                v-for="square, i) in squeres" 
+                v-on:click = "activeGame.makeMove(i)"
+                v-bind:class ="{highlighted : square.isHighlighted}"
+                class="game-view-square">
+
+                {{ square.value }}
+                
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"  charset="utf-8"></script>
+    <script src="js/Game.js" charset="utf-8"></script>
+    <script src="js/Squrare.js"  charset="utf-8"></script>
+    <script type="text/javascript">
+
+            let activeGame = new Game();
+
+            let gameVue = new Vue({
+                el: '#game-view',
+                data: activeGame,
+                computed: {
+                    infoMessage: function (){
+                       if (this.inProgress){
+                           return 'It is ' + this.currentTurn + '\'s turn!';
+                       }
+
+                       if (this.winner) {
+                           return this.winner + ' wins!';
+                       }
+
+                       if (!this.winner && !this.inProgress) {
+                           return 'It was a draw!';
+                       }
+                    }
+                },
+                methods: {
+                restart(){
+                    activeGame.restart();
+                }
+                }
+            })
+    
+    </script>
+
+
+    
+</body>
+</html>
